@@ -19,14 +19,18 @@ package com.stackmob.newman.test.client
 import org.specs2.Specification
 import com.stackmob.newman._
 
-class ApacheHttpClientSpecs extends Specification with ClientTests { def is =
-  "ApacheHttpClientSpecs".title                                                                                         ^ end ^
-  "ApacheHttpClient is the HttpClient implementation that actually hits the internet"                                   ^ end ^
-  "get should work"                                                                                                     ! ClientTests(httpClient).get ^ end ^
-  "post should work"                                                                                                    ! ClientTests(httpClient).post ^ end ^
-  "put should work"                                                                                                     ! ClientTests(httpClient).put ^ end ^
-  "delete should work"                                                                                                  ! ClientTests(httpClient).delete ^ end ^
-  "head should work"                                                                                                    ! ClientTests(httpClient).head ^ end ^
-  end
+class ApacheHttpClientSpecs extends Specification with ClientTests { override def is = s2"""
+
+  ApacheHttpClientSpecs
+
+  ApacheHttpClient is the HttpClient implementation that actually hits the internet
+
+  get should work ${ClientTests(httpClient).get}
+  post should work ${ClientTests(httpClient).post}
+  put should work ${ClientTests(httpClient).put}
+  delete should work ${ClientTests(httpClient).delete}
+  head should work ${ClientTests(httpClient).head}
+  """
+
   private def httpClient = new ApacheHttpClient
 }

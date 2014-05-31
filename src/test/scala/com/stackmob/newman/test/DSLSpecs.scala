@@ -23,48 +23,40 @@ import java.net.URL
 import scalaz.NonEmptyList._
 import org.specs2.matcher.MatchResult
 
-class DSLSpecs extends Specification { def is =
-  "DSLSpecs".title                                                                                                      ^
-  """
+class DSLSpecs extends Specification { override def is = s2"""
+
+  DSLSpecs
+
   The Newman DSL is intended to make it easy to construct and execute HTTP requests
-  """                                                                                                                   ^
-  "GET should"                                                                                                          ^
-    "return a HeaderTransformer"                                                                                        ! GetTest().returnsProperFunction ^
-                                                                                                                        end ^
-  "POST should"                                                                                                         ^
-    "return a HeaderAndBodyTransformer"                                                                                 ! PostTest().returnsProperFunction ^
-                                                                                                                        end ^
-  "PUT should"                                                                                                          ^
-    "return a HeaderAndBodyTransformer"                                                                                 ! PutTest().returnsProperFunction ^
-                                                                                                                        end ^
-  "DELETE should"                                                                                                       ^
-    "return a HeaderTransformer"                                                                                        ! DeleteTest().returnsProperFunction ^
-                                                                                                                        end ^
-  "HEAD should"                                                                                                         ^
-    "return a HeaderTransformer"                                                                                        ! HeadTest().returnsProperFunction ^
-    "execute a HEAD request"                                                                                            ! HeadTest().executesCorrectly ^
-                                                                                                                        end ^
-  "HeaderTransformer should"                                                                                            ^
-    "correctly add a header"                                                                                            ! HeaderTransformerTest().correctlyAddsAHeader ^
-    "correctly add headers"                                                                                             ! HeaderTransformerTest().correctlyAddsHeaders ^
-    "correctly prepend headers"                                                                                         ! HeaderTransformerTest().correctlyPrependsHeaders ^
-    "correctly set a header"                                                                                            ! HeaderTransformerTest().correctlySetsAHeader ^
-    "correctly set headers"                                                                                             ! HeaderTransformerTest().correctlySetsHeaders ^
-    "correctly replace headers"                                                                                         ! HeaderTransformerTest().correctlyReplacesHeaders ^
-                                                                                                                        end ^
-  "HeaderAndBodyTransformer should"                                                                                     ^
-    "correctly add a header"                                                                                            ! HeaderAndBodyTransformerTest().correctlyAddsAHeader ^
-    "correctly add headers"                                                                                             ! HeaderAndBodyTransformerTest().correctlyAddsHeaders ^
-    "correctly set a header"                                                                                            ! HeaderAndBodyTransformerTest().correctlySetsAHeader ^
-    "correctly set headers"                                                                                             ! HeaderAndBodyTransformerTest().correctlySetsHeaders ^
-    "correctly replace headers"                                                                                         ! HeaderAndBodyTransformerTest().correctlyReplacesHeaders ^
-    "correctly prepend headers"                                                                                         ! HeaderAndBodyTransformerTest().correctlyPrependsHeaders ^
-    "correctly prepend a body"                                                                                          ! HeaderAndBodyTransformerTest().correctlyPrependsBody ^
-    "correctly prepend a body"                                                                                          ! HeaderAndBodyTransformerTest().correctlyPrependsBody ^
-    "correctly set a body"                                                                                              ! HeaderAndBodyTransformerTest().correctlySetsBody ^
-    "correctly set a body when passed a string"                                                                         ! HeaderAndBodyTransformerTest().correctlySetsStringBody ^
-    "correctly replace a body"                                                                                          ! HeaderAndBodyTransformerTest().correctlyReplacesBody ^
-                                                                                                                        end
+
+  GET should eturn a HeaderTransformer ${GetTest().returnsProperFunction}
+  POST should eturn a HeaderAndBodyTransformer ${PostTest().returnsProperFunction}
+  PUT should return a HeaderAndBodyTransformer ${PutTest().returnsProperFunction}
+  DELETE should return a HeaderTransformer ${DeleteTest().returnsProperFunction}
+  HEAD should return a HeaderTransformer ${HeadTest().returnsProperFunction}
+  HEAD should execute a HEAD request ${HeadTest().executesCorrectly}
+  HeaderTransformer should
+    correctly add a header ${HeaderTransformerTest().correctlyAddsAHeader}
+    correctly add headers ${HeaderTransformerTest().correctlyAddsHeaders}
+    correctly prepend headers ${HeaderTransformerTest().correctlyPrependsHeaders}
+    correctly set a header ${HeaderTransformerTest().correctlySetsAHeader}
+    correctly set headers ${HeaderTransformerTest().correctlySetsHeaders}
+    correctly replace headers ${HeaderTransformerTest().correctlyReplacesHeaders
+  HeaderAndBodyTransformer should
+    correctly add a header ${HeaderAndBodyTransformerTest().correctlyAddsAHeader}
+    correctly add headers ${HeaderAndBodyTransformerTest().correctlyAddsHeaders}
+    correctly set a header ${HeaderAndBodyTransformerTest().correctlySetsAHeader}
+    correctly set headers ${HeaderAndBodyTransformerTest().correctlySetsHeaders}
+    correctly replace headers ${HeaderAndBodyTransformerTest().correctlyReplacesHeaders}
+    correctly prepend headers ${HeaderAndBodyTransformerTest().correctlyPrependsHeaders}
+    correctly prepend a body {HeaderAndBodyTransformerTest().correctlyPrependsBody}
+    correctly prepend a body ${HeaderAndBodyTransformerTest().correctlyPrependsBody}
+    correctly set a body ${HeaderAndBodyTransformerTest().correctlySetsBody}
+    correctly set a body when passed a string ${HeaderAndBodyTransformerTest().correctlySetsStringBody}
+    correctly replace a body ${HeaderAndBodyTransformerTest().correctlyReplacesBody}
+
+  """
+
   trait Context extends BaseContext {
     implicit protected val client = new DummyHttpClient
     protected val u: URL = url(http, "stackmob.com").toURL
