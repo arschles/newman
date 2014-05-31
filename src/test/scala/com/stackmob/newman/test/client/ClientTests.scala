@@ -48,7 +48,7 @@ trait ClientTests extends MustExpectations with MustMatchers with ResponseMatche
     //part of the JSON body should contain the header, in this format
     private lazy val headers = Headers(headerTup)
 
-    private final val base = "http://gohttpbin.appspot.com"
+    private val base = "http://gohttpbin.appspot.com"
     private lazy val getURL = new URL(s"$base/get")
     private lazy val postURL = new URL(s"$base/post")
     private lazy val putURL = new URL(s"$base/put")
