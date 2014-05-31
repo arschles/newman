@@ -9,9 +9,9 @@ import sbt._
 
 name := "newman"
 
-organization := "com.stackmob"
+organization := "com.github.arschles"
 
-scalaVersion := "2.10.3"
+scalaVersion := "2.10.4"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature")
 
@@ -28,7 +28,7 @@ libraryDependencies ++= {
   val specs2Version = "2.2.3"
   val mockitoVersion = "1.9.0"
   val liftJsonVersion = "2.5.1"
-  val sprayVersion = "1.2.0"
+  val sprayVersion = "1.3.1"
   Seq(
     "org.apache.httpcomponents" % "httpcore" % httpCoreVersion,
     "org.apache.httpcomponents" % "httpclient" % httpClientVersion exclude("org.apache.httpcomponents", "httpcore"),
@@ -86,7 +86,7 @@ publishMavenStyle := true
 publishArtifact in Test := true
 
 pomExtra := (
-  <url>https://github.com/stackmob/newman</url>
+  <url>https://github.com/arschles/newman</url>
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -95,8 +95,8 @@ pomExtra := (
     </license>
   </licenses>
   <scm>
-    <url>git@github.com:stackmob/newman.git</url>
-    <connection>scm:git:git@github.com:stackmob/newman.git</connection>
+    <url>git@github.com:arschles/newman.git</url>
+    <connection>scm:git:git@github.com:arschles/newman.git</connection>
   </scm>
   <developers>
     <developer>
