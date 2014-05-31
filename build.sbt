@@ -11,7 +11,7 @@ name := "newman"
 
 organization := "com.stackmob"
 
-scalaVersion := "2.10.3"
+scalaVersion := "2.10.4"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature")
 
@@ -24,22 +24,27 @@ resolvers ++= List(
 libraryDependencies ++= {
   val httpCoreVersion = "4.2.5"
   val httpClientVersion = "4.2.5"
-  val scalaCheckVersion = "1.10.1"
-  val specs2Version = "2.2.3"
+  val scalaCheckVersion = "1.11.3"
+  val specs2Version = "2.3.12"
   val mockitoVersion = "1.9.0"
-  val liftJsonVersion = "2.5.1"
+  val liftJsonVersion = "3.0-M1"//"2.5.1"
   val sprayVersion = "1.2.0"
+  val parboiledCore = ExclusionRule(organization = "org.parboiled")
+  val scalap = ExclusionRule("org.scala-lang", "scalap")
+  val commonsCodec = ExclusionRule("commons-codec", "commons-codec")
+  val scalazCore = ExclusionRule("org.scalaz", "scalaz-core_2.10")
+  val httpCore = ExclusionRule("org.apache.httpcomponents", "httpcore")
   Seq(
     "org.apache.httpcomponents" % "httpcore" % httpCoreVersion,
-    "org.apache.httpcomponents" % "httpclient" % httpClientVersion exclude("org.apache.httpcomponents", "httpcore"),
-    "io.spray" % "spray-client" % sprayVersion,
-    "io.spray" % "spray-caching" % sprayVersion,
-    "com.typesafe.akka" %% "akka-actor" % "2.2.3",
-    "com.twitter" %% "finagle-http" % "6.5.0" exclude("commons-codec", "commons-codec"),
-    "net.liftweb" %% "lift-json-scalaz7" % liftJsonVersion,
-    "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",
-    "org.specs2" %% "specs2" % specs2Version % "test" exclude("org.scalaz", "scalaz-core_2.10"),
-    "org.pegdown" % "pegdown" % "1.2.1" % "test" exclude("org.parboiled", "parboiled-core"),
+    "org.apache.httpcomponents" % "httpclient" % httpClientVersion excludeAll(httpCore),
+    "io.spray" % "spray-client" % sprayVersion excludeAll(scalap),
+    "io.spray" % "spray-caching" % sprayVersion excludeAll(scalap, parboiledCore),
+    "com.typesafe.akka" %% "akka-actor" % "2.2.3" excludeAll(scalap, parboiledCore),
+    "com.twitter" %% "finagle-http" % "6.5.0" excludeAll(commonsCodec, parboiledCore),
+    "net.liftweb" %% "lift-json-scalaz7" % liftJsonVersion excludeAll(scalap, parboiledCore),
+    "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test" excludeAll(parboiledCore),
+    "org.specs2" %% "specs2" % specs2Version % "test" excludeAll(scalazCore, scalap, parboiledCore),
+    "org.pegdown" % "pegdown" % "1.2.1" % "test" excludeAll(parboiledCore),
     "org.mockito" % "mockito-all" % mockitoVersion % "test"
   )
 }
@@ -72,6 +77,8 @@ releaseProcess := Seq[ReleaseStep](
   pushChanges
 )
 
+conflictManager := ConflictManager.strict
+
 publishTo <<= (version) { version: String =>
   val nexus = "https://oss.sonatype.org/"
   if (version.trim.endsWith("SNAPSHOT")) {
@@ -85,8 +92,7 @@ publishMavenStyle := true
 
 publishArtifact in Test := true
 
-pomExtra := (
-  <url>https://github.com/stackmob/newman</url>
+pomExtra := <url>https://github.com/stackmob/newman</url>
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -130,4 +136,3 @@ pomExtra := (
       <url>http://github.com/jrwest</url>
     </developer>
   </developers>
-)
