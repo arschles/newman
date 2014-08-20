@@ -27,17 +27,20 @@ import scala.concurrent._
 import scala.concurrent.duration.Duration
 import java.util.concurrent.TimeUnit
 
-class AsyncResponseHandlerDSLSpecs extends Specification { def is =
-  "AsyncResponseHandlerDSLSpecs".title                                                                                  ^ end ^
-  "AsyncResponseHandlerDSL is a DSL used to handle responses with Newman"                                               ^ end ^
-  "The DSL should"                                                                                                      ^
-    "return a Failure if the IO throws"                                                                                 ! ThrowingIO().returnsFailure ^ end ^
-    "return a Success if the IO doesn't throw, types aren't specified, and Unit is returned"                            ! ThrowingIO().returnsEmptySuccess ^ end ^
-    "return a Success if the IO doesn't throw, types aren't specified, and non-Unit is returned"                        ! ThrowingIO().returnsNonEmptySuccess ^ end ^
-    "return non throwable error types if specified & the IO throws"                                                     ! CustomErrors().returnsErrorCorrectly ^ end ^
-    "return successful validation of nonthrowable error type if specified"                                              ! CustomErrors().returnsSuccessCorrectly ^ end ^
-    "evaluate the first applicable handler in the list, not the last"                                                   ! Handlers().evalFirst ^ end ^
-  end
+class AsyncResponseHandlerDSLSpecs extends Specification { override def is = s2"""
+
+  AsyncResponseHandlerDSLSpecs
+
+  AsyncResponseHandlerDSL is a DSL used to handle responses with Newman
+
+  The DSL should
+    return a Failure if the IO throws ${ThrowingIO().returnsFailure}
+    return a Success if the IO doesn't throw, types aren't specified, and Unit is returned ${ThrowingIO().returnsEmptySuccess}
+    return a Success if the IO doesn't throw, types aren't specified, and non-Unit is returned ${ThrowingIO().returnsNonEmptySuccess}
+    return non throwable error types if specified & the IO throws ${CustomErrors().returnsErrorCorrectly}
+    return successful validation of nonthrowable error type if specified ${CustomErrors().returnsSuccessCorrectly}
+    evaluate the first applicable handler in the list, not the last ${Handlers().evalFirst}
+  """
 
   import com.stackmob.newman.concurrent.SequentialExecutionContext
 

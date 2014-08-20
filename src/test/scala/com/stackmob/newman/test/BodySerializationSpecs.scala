@@ -34,21 +34,23 @@ import scala.concurrent.duration.Duration
 import java.util.concurrent.TimeUnit
 import scala.concurrent.Future
 
-class BodySerializationSpecs extends Specification { def is =
-  "BodySerializationSpecs".title                                                                                        ^
-  """
+class BodySerializationSpecs extends Specification { override def is = s2"""
+
+  BodySerializationSpecs
+
   The Newman DSL is intended to make it easy to construct and execute HTTP requests
-  """                                                                                                                   ^
-  "Serialization should"                                                                                                ^
-    "serialize with a provided JSONR"                                                                                   ! SerializationTest().serializesWithJSONW ^
-    "serialize without a provided JSONR"                                                                                ! SerializationTest().serializesWithoutJSONW ^
-    "serialize with a specific JSONR"                                                                                   ! SerializationTest().serializesWithSpecificJSONW ^
-  "Deserialization should"                                                                                              ^
-    "deserialize with a provided JSONR"                                                                                 ! DeserializationTest().deserializesWithJSONR ^
-    "deserialize without a provided JSONR"                                                                              ! DeserializationTest().deserializesWithoutJSONR ^
-    "deserialize with a specific JSONR"                                                                                 ! DeserializationTest().deserializesWithSpecificJSONR ^
-    "deserialize with an overriding JSONR"                                                                              ! DeserializationTest().deserializesWithReplacedJSONR ^
-                                                                                                                        end
+
+  Serialization should
+    serialize with a provided JSONR ${SerializationTest().serializesWithJSONW}
+    serialize without a provided JSONR ${SerializationTest().serializesWithoutJSONW}
+    serialize with a specific JSONR ${SerializationTest().serializesWithSpecificJSONW}
+  Deserialization should
+    deserialize with a provided JSONR ${DeserializationTest().deserializesWithJSONR}
+    deserialize without a provided JSONR ${DeserializationTest().deserializesWithoutJSONR}
+    deserialize with a specific JSONR ${DeserializationTest().deserializesWithSpecificJSONR}
+    deserialize with an overriding JSONR ${DeserializationTest().deserializesWithReplacedJSONR}
+  """
+
   protected val url = new URL("http://stackmob.com")
   import BodySerializationSpecs._
 

@@ -33,7 +33,7 @@ class HttpResponseSerialization(charset: Charset = UTF8Charset) extends Serializ
   protected val BodyKey = "body"
   protected val TimeReceivedKey = "time_received"
 
-  override implicit val writer = new JSONW[HttpResponse] {
+  override implicit lazy val writer = new JSONW[HttpResponse] {
 
     import HeadersSerialization.{writer => HeadersWriter}
     import HttpResponseCodeSerialization.{writer => ResponseCodeWriter}
@@ -49,7 +49,7 @@ class HttpResponseSerialization(charset: Charset = UTF8Charset) extends Serializ
     }
   }
 
-  override implicit val reader = new JSONR[HttpResponse] {
+  override implicit lazy val reader = new JSONR[HttpResponse] {
 
     import HeadersSerialization.{reader => HeadersReader}
     import HttpResponseCodeSerialization.{reader => ResponseCodeReader}
